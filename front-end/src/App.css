@@ -1,0 +1,20 @@
+
+
+h2{
+    font-family: "Domine", serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: normal;
+}
+.suggestion_card{
+    border:2px solid rgb(211, 211, 211);
+    width:168px;
+    height:120px;
+    padding:6px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+.input_container{
+    font-family: "Domine", serif;
+    font-size: small;
+}
