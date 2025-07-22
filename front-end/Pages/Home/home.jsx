@@ -4,8 +4,9 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 const home = () => {
   return (
-    <div className='Home w-full h-full flex justify-center items-center'>
+    <div className='Home w-full relative inset-0 h-full flex justify-center items-center'>
       <div className="content_container w-180 h-full py-12">
+        
         <div className="main w-full h-full flex flex-col justify-between">
             <div className="upper_block">
               <div className="title_container">

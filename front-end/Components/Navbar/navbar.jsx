@@ -23,18 +23,18 @@ const navbar = () => {
   const [open,setOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   return (
-    <div className={`Navbar ${open?'w-70 bg-[#b3b3b3]':"w-10"} transition duration-200 ease-linear h-full py-2 border-r-1 border-gray-300`}>
+    <div className={`Navbar ${open?'w-70 bg-[#b3b3b3]':"w-10"} transition duration-200 ease-linear h-full pt-2 border-r-1 border-gray-300`}>
       <div className={`hamburger flex justify-between px-2 items-center`} >
         { 
-          open ? <MenuOpenRoundedIcon onClick={()=>setOpen(open?false:true)}/> : <MenuRoundedIcon onClick={()=>setOpen(open?false:true)}/>
+          open ? <MenuOpenRoundedIcon className='mt-[-4px]' onClick={()=>setOpen(open?false:true)}/> : <MenuRoundedIcon  onClick={()=>setOpen(open?false:true)}/>
         }
         {
           open&&
-          <div className="toggle_btn w-fit">
+          <div className="toggle_btn w-fit mt-[-10px]">
             {
               isDark? <DarkModeIcon sx={{color:'grey'}}/> : <LightModeIcon sx={{color:'grey'}}/>
             }
-            <GreySwitch onClick={()=>setIsDark(isDark?false:true)} />
+            <GreySwitch defaultChecked={isDark} onClick={()=>setIsDark(isDark?false:true)} />
           </div>
         }
       </div>
