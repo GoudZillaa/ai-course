@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import {Routes,Route,useLocation} from 'react-router-dom'
+import PrivateRoute from '../Components/PrivateRoute/privateRoute'
 
 import Navbar from '../Components/Navbar/navbar'
 import Home from '../Pages/Home/home'
@@ -31,10 +32,9 @@ function App() {
         <Route path='/' element={<Welcome/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login />}/>
-        <Route path='/home' element={<Home />}/>
-        <Route path='/loading' element={<Generating />}/>
-        <Route path='/output' element={<Output />}/>
-        <Route path='/test' element={<Test />}/>
+        <Route path='/home' element={<PrivateRoute> <Home /> </PrivateRoute>}/>
+        <Route path='/loading' element={<PrivateRoute> <Generating /> </PrivateRoute>}/>
+        <Route path='/output' element={<PrivateRoute> <Output /> </PrivateRoute>}/>
       </Routes>
       
     </div>

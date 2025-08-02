@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../src/App.css'
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import { useAuth } from '../../Context/authContext';
 
 const home = () => {
     const [topic, setTopic] = useState("");
   const navigate = useNavigate();
+  const {user} = useAuth();
+  console.log(user)
 
   const handleSubmit = () => {
     if (!topic.trim()) return;
@@ -19,7 +22,7 @@ const home = () => {
             <div className="upper_block">
               <div className="title_container">
                 <div className="title">
-                  <h2>{`Hi there, Abhay.`}</h2>
+                  <h2>{`Hi there, ${user.username||'user'}.`}</h2>
                   <h2>What would you like to learn today?</h2>
                 </div>
                 <div className="subtitle text-[1.2rem]  font-medium leading-none text-gray-400">
