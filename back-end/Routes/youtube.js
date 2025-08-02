@@ -5,6 +5,9 @@ const router = express.Router();
 
 router.post("/videos", async (req, res) => {
   const { query } = req.body;
+   if (!query) {
+    return res.status(400).json({ error: 'Missing query parameter' });
+  }
 
   try {
     const youtubeRes = await axios.get(
@@ -27,7 +30,8 @@ router.post("/videos", async (req, res) => {
 
     res.json(videos);
   } catch (err) {
-    res.status(500).json({ error: "YouTube API error" });
+    console.error('🔴 Error in /api/videos route:', err.message)
+    res.status(500).json({ error: "YouTube API error", err });
   }
 });
 export default router;

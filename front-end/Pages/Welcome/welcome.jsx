@@ -35,10 +35,10 @@ const welcome = () => {
           <p>login or signup to continue</p>
         </div>
         <div className="button_container w-[65%] flex gap-6">
-          <button onClick={()=>navigate('/home')} className="px-4 font-bold text-[1.2rem] py-2 border-gray-300 text-gray-500 rounded-lg border-3 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1 ">
+          <button onClick={()=>navigate('/login')} className="px-4 font-bold text-[1.2rem] py-2 border-gray-300 text-gray-500 rounded-lg border-3 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1 ">
             Login
           </button>
-          <button onClick={()=>navigate('/test')} className="px-4 font-bold text-[1.2rem] py-2 bg-gray-300 text-gray-600 border-gray-300 rounded-lg border-2 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1">
+          <button onClick={()=>navigate('/signup')} className="px-4 font-bold text-[1.2rem] py-2 bg-gray-300 text-gray-600 border-gray-300 rounded-lg border-2 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1">
             SignUp
           </button>
         </div>

@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../src/App.css'
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 const home = () => {
+    const [topic, setTopic] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (!topic.trim()) return;
+    navigate(`/loading?topic=${encodeURIComponent(topic)}`);
+  };
   return (
     <div className='Home w-full relative inset-0 h-full flex justify-center items-center'>
       <div className="content_container w-180 h-full py-12">
@@ -41,8 +49,12 @@ const home = () => {
             </div>
 
             <div className="input_container w-full h-15 bg-white rounded-lg border-2 border-gray-300 text-gray-600 font-bold flex justify-between px-2 items-center">
-                <div className='flex justify-center text-xl'>"I want to learn <input type="text" className='focus:outline-none text-black font-normal px-2 border-b-[1px] w-30' required /> from scratch"</div>
-                <button className='bg-gray-300 p-2 rounded'><ArrowForwardRoundedIcon/></button>
+                <div className='flex justify-center text-xl'>"I want to learn 
+                  <input type="text"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)} 
+                  className='focus:outline-none text-black font-normal px-2 border-b-[1px] w-30' required /> from scratch"</div>
+                <button onClick={handleSubmit} className='bg-gray-300 p-2 rounded'><ArrowForwardRoundedIcon/></button>
             </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React from "react";
+import {Link,useNavigate} from 'react-router-dom'
 
 const login = () => {
+  const navigate = useNavigate()
   return (
     <div className="Login flex justify-center items-center absolute inset-0 z-10 w-full h-full bg-gray-200 bg-opcaity-50">
       <div className="login_card w-100 h-100 bg-white rounded-lg gap-8 flex flex-col py-14 justify-between items-center">
@@ -19,8 +21,8 @@ const login = () => {
         </div>
         
         <div className="button_container mb-4 flex gap-6 px-4">
-            <button className="px-2 font-bold text-[0.8rem] py-1 border-gray-300 text-gray-500 rounded-lg border-2 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1 ">Cancel</button>
-            <button className="px-2 font-bold text-[0.8rem] py-1 bg-gray-300 text-gray-600 border-gray-300 rounded-lg border-2 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1">Login</button>
+            <button onClick={()=>navigate('/')} className="px-2 font-bold text-[0.8rem] py-1 border-gray-300 text-gray-500 rounded-lg border-2 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1 ">Cancel</button>
+            <button onClick={()=>navigate('/home')} className="px-2 font-bold text-[0.8rem] py-1 bg-gray-300 text-gray-600 border-gray-300 rounded-lg border-2 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1">Login</button>
         </div>
 
       </div>

@@ -23,7 +23,8 @@ const navbar = () => {
   const [open,setOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   return (
-    <div className={`Navbar ${open?'w-70 bg-[#b3b3b3]':"w-10"} transition duration-200 ease-linear h-full pt-2 border-r-1 border-gray-300`}>
+    <div className={`Navbar flex flex-col justify-between ${open?'w-70 bg-[#b3b3b3]':"w-10"} transition duration-200 ease-linear h-screen pt-2 border-r-1 border-gray-300`}>
+
       <div className={`hamburger flex justify-between px-2 items-center`} >
         { 
           open ? <MenuOpenRoundedIcon className='mt-[-4px]' onClick={()=>setOpen(open?false:true)}/> : <MenuRoundedIcon  onClick={()=>setOpen(open?false:true)}/>
@@ -38,6 +39,21 @@ const navbar = () => {
           </div>
         }
       </div>
+
+      {
+        open && 
+          <div className="nav_options bg-red-00 h-70 flex flex-col  py-6">
+            <button className='text-start px-4 py-2 font-bold hover:-translate-y-2 duration-100 ease-linear active:translate-y-2 hover:pl-[1.1rem]'>History</button>
+            <button className='text-start px-4 py-2 font-bold hover:-translate-y-2 duration-100 ease-linear active:translate-y-2 hover:pl-[1.1rem]'>History</button>
+            <button className='text-start px-4 py-2 font-bold hover:-translate-y-2 duration-100 ease-linear active:translate-y-2 hover:pl-[1.1rem]'>History</button>
+          </div>
+      }
+      {
+        open &&
+        <div className="bottom_div  w-full h-20">
+
+        </div>
+      }
     </div>
   )
 }
