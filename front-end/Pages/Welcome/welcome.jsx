@@ -1,12 +1,21 @@
-import React from "react";
+import React,{useEffect} from "react";
 import placeholder from '../../src/assets/youtube-placeholder.jpeg'
 import UndoIcon from '@mui/icons-material/Undo';
 import logo from '../../src/assets/logo.png';
 import {Link,useNavigate} from 'react-router-dom'
+import {useAuth} from '../../Context/authContext'
 
 
 const welcome = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  useEffect(()=>{
+    const storedUser=localStorage.getItem('user')
+    const storedToken = localStorage.getItem('token')
+
+    if(storedToken && storedUser){
+      navigate('/home')
+    }
+  },[])
   return (
     <div className="Welcome relative flex w-full h-full ">
       <div className="navbar absolute w-full h-16 flex justify-between">

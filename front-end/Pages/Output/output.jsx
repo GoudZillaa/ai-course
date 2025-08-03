@@ -15,7 +15,6 @@ const output = () => {
   const courseData = isExtended ? extendedCourse.extendedConcepts : course.coreConcepts;
   const videoData = isExtended ? extendedVideoResults : videoResults;
 
-  console.log(videoData);
 
   useEffect(() => {
     const fetchExtended = async () => {
@@ -24,7 +23,7 @@ const output = () => {
         const extendedData = res.data;
         setExtendedCourse(extendedData);
 
-        const videoCache = {}; // Avoid duplicate API calls
+        const videoCache = {}; 
 
         const extendedVideoResults = await Promise.all(
           extendedData.extendedConcepts.map(async (concept) => {
@@ -51,7 +50,24 @@ const output = () => {
       }
     };
 
+    const uploadCourse=async()=>{
+      const token=localStorage.getItem('token');
+      try{
+        const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/save-course`,{
+          topic,
+          coreConcepts:course,
+          extendedConcepts:extendedCourse,
+          videoResults,
+          extendedVideoResults
+        },{ headers: { Authorization: `Bearer ${token}` }});
+        console.log(res);
+      }catch(err){
+        console.error('error saving course',err)
+      }
+    }
+
     fetchExtended();
+    uploadCourse();
   }, []);
 
   const handleExpand = () => {
