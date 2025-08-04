@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -8,6 +8,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import {useAuth} from '../../Context/authContext'
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const GreySwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase.Mui-checked': {
@@ -24,9 +25,30 @@ const GreySwitch = styled(Switch)(({ theme }) => ({
 const navbar = () => {
   const [open,setOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const {user,logout} = useAuth();
+  const [courses, setCourses] = useState([]);
+  const {logout} = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/courses`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(res)
+        setCourses(res.data.courses.reverse()); 
+      } catch (err) {
+        console.error("Failed to fetch courses:", err);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const handleCourseClick = (courseId) => {
+    navigate(`/saved/${courseId}`);
+  };
   return (
     <div className={`Navbar flex flex-col justify-between ${open?'w-70 bg-[#b3b3b3]':"w-10"} transition duration-200 ease-linear h-screen pt-2 border-r-1 border-gray-300`}>
 
@@ -48,9 +70,20 @@ const navbar = () => {
       {
         open && 
           <div className="nav_options bg-red-00 h-70 flex flex-col  py-6">
-            <button className='text-start px-4 py-2 font-bold hover:-translate-y-2 duration-100 ease-linear active:translate-y-2 hover:pl-[1.1rem]'>History</button>
-            <button className='text-start px-4 py-2 font-bold hover:-translate-y-2 duration-100 ease-linear active:translate-y-2 hover:pl-[1.1rem]'>History</button>
-            <button className='text-start px-4 py-2 font-bold hover:-translate-y-2 duration-100 ease-linear active:translate-y-2 hover:pl-[1.1rem]'>History</button>
+            <h2 className="text-lg font-semibold mb-4">History</h2>
+            {courses.length > 0 ? (
+              courses.map((course) => (
+                <div
+                  key={course._id}
+                  className="cursor-pointer font-medium mb-2 hover:text-blue-600"
+                  onClick={() => handleCourseClick(course._id)}
+                >
+                  {course.topic}
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No saved courses yet</p>
+            )}
           </div>
       }
       {

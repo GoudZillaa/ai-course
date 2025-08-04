@@ -13,10 +13,10 @@ import Output from '../Pages/Output/output'
 import Login from '../Components/Login/login'
 import Signup from '../Components/Signup/signup'
 import Welcome from '../Pages/Welcome/welcome'
+import SavedCoursePage from '../Pages/SavedCoursePage/savedCoursePage'
 
 function App() {
   const location = useLocation()
-  const [count, setCount] = useState(0)
   const [isLoggedIn,setIsLoggedIn]= useState(false)
 
   useEffect(()=>{
@@ -35,6 +35,7 @@ function App() {
         <Route path='/home' element={<PrivateRoute> <Home /> </PrivateRoute>}/>
         <Route path='/loading' element={<PrivateRoute> <Generating /> </PrivateRoute>}/>
         <Route path='/output' element={<PrivateRoute> <Output /> </PrivateRoute>}/>
+        <Route path="/saved/:id" element={<PrivateRoute> <SavedCoursePage /> </PrivateRoute>} />
       </Routes>
       
     </div>

@@ -16,59 +16,68 @@ const output = () => {
   const videoData = isExtended ? extendedVideoResults : videoResults;
 
 
-  useEffect(() => {
-    const fetchExtended = async () => {
-      try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/extended`, { topic });
-        const extendedData = res.data;
-        setExtendedCourse(extendedData);
+useEffect(() => {
+  const fetchExtended = async () => {
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/extended`, { topic });
+      const extendedData = res.data;
+      setExtendedCourse(extendedData);
 
-        const videoCache = {}; 
+      const videoCache = {};
 
-        const extendedVideoResults = await Promise.all(
-          extendedData.extendedConcepts.map(async (concept) => {
-            const query = concept.videoSearchQuery;
+      const extendedVideoResults = await Promise.all(
+        extendedData.extendedConcepts.map(async (concept) => {
+          const query = concept.videoSearchQuery;
 
-            if (videoCache[query]) return videoCache[query];
+          if (videoCache[query]) return videoCache[query];
 
-            try {
-              const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/videos`, {
-                query,
-              });
-              videoCache[query] = res.data;
-              return res.data;
-            } catch (err) {
-              console.warn(`Video fetch failed for: ${query}`, err);
-              return []; // Fallback to empty list if API fails
-            }
-          })
-        );
+          try {
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/videos`, {
+              query,
+            });
+            videoCache[query] = res.data;
+            return res.data;
+          } catch (err) {
+            console.warn(`Video fetch failed for: ${query}`, err);
+            return [];
+          }
+        })
+      );
 
-        setExtendedVideoResults(extendedVideoResults);
-      } catch (err) {
-        console.error("Error fetching extended course:", err);
-      }
-    };
+      setExtendedVideoResults(extendedVideoResults);
 
-    const uploadCourse=async()=>{
-      const token=localStorage.getItem('token');
-      try{
-        const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/save-course`,{
-          topic,
-          coreConcepts:course,
-          extendedConcepts:extendedCourse,
-          videoResults,
-          extendedVideoResults
-        },{ headers: { Authorization: `Bearer ${token}` }});
-        console.log(res);
-      }catch(err){
-        console.error('error saving course',err)
-      }
+      // ✅ Upload course AFTER extended data is fetched
+      uploadCourse(extendedData, extendedVideoResults);
+    } catch (err) {
+      console.error("Error fetching extended course:", err);
     }
+  };
 
-    fetchExtended();
-    uploadCourse();
-  }, []);
+  const uploadCourse = async (extendedData, extendedVideos) => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/save-course`,
+        {
+          topic,
+          coreConcepts: course.coreConcepts,
+          extendedConcepts: extendedData.extendedConcepts,
+          videoResults,
+          extendedVideoResults: extendedVideos
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      console.log("Course saved:", res.data);
+    } catch (err) {
+      console.error("Error saving course", err);
+    }
+  };
+
+  fetchExtended();
+}, []);
+
 
   const handleExpand = () => {
     setIsExtended(true);
