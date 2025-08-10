@@ -49,9 +49,9 @@ const generating = () => {
   }, [topic, navigate]);
 
   return (
-    <div className="Generate w-full h-full">
+    <div className="Generate w-full dark:bg-gray-800 dark:text-white h-full">
       <div className="flex h-full flex-col items-center justify-center text-black font-sans px-4">
-        <h1 className="text-xl sm:text-2xl font-medium text-center">
+        <h1 className="text-xl sm:text-2xl dark:text-white font-medium text-center">
           Generating your personalized course
           <span className="inline-block animate-dots ml-1">.</span>
         </h1>

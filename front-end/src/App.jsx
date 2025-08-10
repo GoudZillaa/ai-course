@@ -17,17 +17,16 @@ import SavedCoursePage from '../Pages/SavedCoursePage/savedCoursePage'
 
 function App() {
   const location = useLocation()
-  const [isLoggedIn,setIsLoggedIn]= useState(false)
+ const hideNavbarRoutes = ['/', '/login', '/signup', '/welcome']
 
-  useEffect(()=>{
-    if(location.pathname === '/home'){
-      setIsLoggedIn(true)
-    }
-  },[location])
+  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname)
 
   return (
-    <div className="App w-screen h-screen relative z-0 bg-[#eeeeee] text-black flex ">
-      {isLoggedIn && <Navbar />}
+    <div className="App w-dvw h-dvh relative z-0 bg-[#eeeeee] text-black flex flex-col ">
+      {shouldShowNavbar && <Navbar />}
+
+      <div className="flex-grow">
+
       <Routes>
         <Route path='/' element={<Welcome/>}/>
         <Route path='/signup' element={<Signup/>}/>
@@ -37,6 +36,7 @@ function App() {
         <Route path='/output' element={<PrivateRoute> <Output /> </PrivateRoute>}/>
         <Route path="/saved/:id" element={<PrivateRoute> <SavedCoursePage /> </PrivateRoute>} />
       </Routes>
+      </div>
       
     </div>
   )

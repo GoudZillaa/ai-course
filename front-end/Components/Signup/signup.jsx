@@ -23,8 +23,8 @@ const signup = () => {
   };
 
   return (
-    <div className="Signup flex justify-center items-center absolute inset-0 z-10 w-full h-full bg-gray-200 bg-opcaity-50">
-      <div className="Signup_card w-100 h-120 bg-white rounded-lg gap-8 flex flex-col py-14 justify-between items-center">
+    <div className="Signup flex justify-center items-center absolute inset-0 z-10 w-full h-full dark:bg-gray-700 bg-gray-200 bg-opcaity-50">
+      <div className="Signup_card dark:bg-gray-900 dark:text-white w-100 h-120 bg-white rounded-lg gap-8 flex flex-col py-14 justify-between items-center">
         
         <div className="top_container flex flex-col gap-6">
             <div className="signup_title text-center ">

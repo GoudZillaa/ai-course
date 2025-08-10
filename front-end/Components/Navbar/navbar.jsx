@@ -9,22 +9,10 @@ import { grey } from '@mui/material/colors';
 import {useAuth} from '../../Context/authContext'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-
-const GreySwitch = styled(Switch)(({ theme }) => ({
-  '& .MuiSwitch-switchBase.Mui-checked': {
-    color: grey[900],
-    '&:hover': {
-      backgroundColor: alpha(grey[900], theme.palette.action.hoverOpacity),
-    },
-  },
-  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-    backgroundColor: grey[900],
-  },
-}));
+import ThemeToggle from '../ThemeToggle/themeToggle'
 
 const navbar = () => {
   const [open,setOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const [courses, setCourses] = useState([]);
   const {logout} = useAuth();
   const navigate = useNavigate();
@@ -32,7 +20,7 @@ const navbar = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       const token = localStorage.getItem("token");
-      try {
+      try{
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/courses`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -47,49 +35,58 @@ const navbar = () => {
   }, []);
 
   const handleCourseClick = (courseId) => {
+    setOpen(false);
     navigate(`/saved/${courseId}`);
   };
-  return (
-    <div className={`Navbar flex flex-col justify-between ${open?'w-70 bg-[#b3b3b3]':"w-10"} transition duration-200 ease-linear h-screen pt-2 border-r-1 border-gray-300`}>
 
-      <div className={`hamburger flex justify-between px-2 items-center`} >
-        { 
-          open ? <MenuOpenRoundedIcon className='mt-[-4px]' onClick={()=>setOpen(open?false:true)}/> : <MenuRoundedIcon  onClick={()=>setOpen(open?false:true)}/>
-        }
-        {
-          open&&
-          <div className="toggle_btn w-fit mt-[-10px]">
-            {
-              isDark? <DarkModeIcon sx={{color:'grey'}}/> : <LightModeIcon sx={{color:'grey'}}/>
-            }
-            <GreySwitch defaultChecked={isDark} onClick={()=>setIsDark(isDark?false:true)} />
-          </div>
-        }
+  return (
+    <div className={`Navbar fixed inset-0 z-30 flex flex-col max-md:bg-transparent dark:bg-gray-800 justify-between ${open?'w-70 h-screen max-md:h-dvh bg-white dark:bg-gray-800':"w-10 max-md:h-fit"}  transition duration-200 ease-linear  h-full pt-2 max-md:border-none border-r border-gray-300 dark:border-gray-600`}>
+      
+      <div className={`hamburger flex justify-between px-2 items-center`}>
+        {open ? (
+          <MenuOpenRoundedIcon 
+            className='mt-[-4px] text-gray-700 dark:text-gray-300 cursor-pointer' 
+            onClick={() => setOpen(false)}
+          />
+        ) : (
+          <MenuRoundedIcon 
+            className='text-gray-700 dark:text-gray-300 cursor-pointer' 
+            onClick={() => setOpen(true)}
+          />
+        )}
+        
+        {open && <ThemeToggle variant="navbar" />}
       </div>
 
       {
         open && 
-          <div className="nav_options bg-red-00 h-70 flex flex-col  py-6">
-            <h2 className="text-lg font-semibold mb-4">History</h2>
-            {courses.length > 0 ? (
-              courses.map((course) => (
-                <div
-                  key={course._id}
-                  className="cursor-pointer font-medium mb-2 hover:text-blue-600"
-                  onClick={() => handleCourseClick(course._id)}
-                >
-                  {course.topic}
-                </div>
-              ))
-            ) : (
-              <p className="text-sm text-gray-500">No saved courses yet</p>
-            )}
-          </div>
+        <div className="nav_options bg-transparent h-70 flex flex-col overflow-y-auto scrollbar-hide py-6 px-2">
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">History</h2>
+          {courses.length > 0 ? (
+            courses.map((course) => (
+              <div
+                key={course._id}
+                className="cursor-pointer font-medium mb-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                onClick={() => handleCourseClick(course._id)}
+              >
+                {course.topic}
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500 dark:text-gray-400">No saved courses yet</p>
+          )}
+        </div>
       }
+      
       {
         open &&
-        <div className="bottom_div  w-full h-20">
-          <button onClick={()=>logout()} className="px-4 font-bold text-[1.2rem] py-2 bg-white border-gray-300 text-gray-500 rounded-lg border-3 hover:-translate-y-1 transition-transform duration-300 linear active:translate-y-1 ">Logout</button>
+        <div className="bottom_div w-full h-20 px-2">
+          <button 
+            onClick={()=>logout()} 
+            className="px-4 font-bold text-[1.2rem] py-2 w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 rounded-lg border-2 hover:-translate-y-1 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 active:translate-y-1"
+          >
+            Logout
+          </button>
         </div>
       }
     </div>
