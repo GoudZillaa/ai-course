@@ -40,7 +40,7 @@ const navbar = () => {
   };
 
   return (
-    <div className={`Navbar fixed inset-0 z-30 flex flex-col max-md:bg-transparent dark:bg-gray-800 justify-between ${open?'w-70 h-screen max-md:h-dvh bg-white dark:bg-gray-800':"w-10 max-md:h-fit"}  transition duration-200 ease-linear  h-full pt-2 max-md:border-none border-r border-gray-300 dark:border-gray-600`}>
+    <div className={`Navbar fixed inset-0 z-30 flex flex-col dark:bg-gray-800 justify-between ${open?'w-70 h-screen max-md:h-dvh bg-gray-400 dark:bg-gray-800':"w-10 max-md:h-fit"}  transition duration-200 ease-linear  h-full pt-2 max-md:border-none border-r border-gray-300 dark:border-gray-600`}>
       
       <div className={`hamburger flex justify-between px-2 items-center`}>
         {open ? (

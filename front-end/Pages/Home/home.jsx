@@ -25,7 +25,7 @@ const home = () => {
 
   return (
     <div className="Home w-full max-md:h-dvh dark:bg-gray-900 bg-white relative inset-0 h-full flex justify-center items-center">
-      <div className="content_container max-md:w-screen w-180 h-full py-12">
+      <div className="content_container max-md:w-screen max-md:px-4 max-md:py-24 w-180 h-full py-12">
         <div className="main w-full h-full flex flex-col justify-between">
           <div className="upper_block">
             <div className="title_container">
@@ -33,13 +33,13 @@ const home = () => {
                 <h2>{`Hi there, ${user.username || 'user'}.`}</h2>
                 <h2>What would you like to learn today?</h2>
               </div>
-              <div className="subtitle text-[1.2rem] font-medium leading-none text-gray-400">
+              <div className="subtitle text-[1.2rem] max-md:hidden font-medium leading-none text-gray-400">
                 here are some of the most <br /> commonly asked topics
               </div>
             </div>
             <br />
 
-            <div className="suggestion_block flex justify-between px-2 leading-none gap-3">
+            <div className="suggestion_block flex max-md:flex-col max-md:hidden justify-between px-2 leading-none gap-3">
               {suggestions.map((s, idx) => (
                 <div
                   key={idx}
