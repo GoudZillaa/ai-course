@@ -80,7 +80,14 @@ const navbar = () => {
       
       {
         open &&
-        <div className="bottom_div w-full h-20 px-2">
+        <div className="bottom_div w-full flex flex-col gap-4 h-50 px-2">
+          <button 
+            onClick={()=>navigate('/home')} 
+            className="px-4 font-bold text-[1.2rem] py-2 w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 rounded-lg border-2 hover:-translate-y-1 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 active:translate-y-1"
+          >
+            New Chat
+          </button>
+
           <button 
             onClick={()=>logout()} 
             className="px-4 font-bold text-[1.2rem] py-2 w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 rounded-lg border-2 hover:-translate-y-1 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 active:translate-y-1"
