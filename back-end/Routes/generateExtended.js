@@ -28,10 +28,12 @@ Respond ONLY with valid JSON in this format:
 }`;
 
   try {
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error("Missing OPENAI_API_KEY in environment");
+    const apiToken = process.env.OPENAI_API_KEY || process.env.GITHUB_TOKEN;
+    if (!apiToken) {
+      throw new Error("Missing API Token (OPENAI_API_KEY or GITHUB_TOKEN) in environment");
     }
 
+    const client = new OpenAI({ baseURL: "https://models.github.ai/inference", apiKey: apiToken });
     const response = await client.chat.completions.create({
       messages: [
         { role: "system", content: "You are a helpful advanced instructor. Your response must be valid JSON only. Do not include markdown formatting." },
