@@ -92,9 +92,10 @@ const Login = () => {
           <div className="flex flex-col gap-4 pt-4">
             <button 
               type="submit"
-              className="w-full py-4 rounded-2xl font-bold text-lg bg-[#6366f1] hover:bg-[#4f46e5] text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-1 active:translate-y-0 transition-all duration-200"
+              disabled={loading}
+              className={`w-full py-4 rounded-2xl font-bold text-lg bg-[#6366f1] hover:bg-[#4f46e5] text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-1 active:translate-y-0 transition-all duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </button>
             <button 
               type="button"

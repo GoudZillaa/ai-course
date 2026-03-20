@@ -1,11 +1,13 @@
 import express from 'express';
 import User from '../Models/user.js';
 import { authenticateToken } from '../Middleware/auth.js';
+import connectDB from '../db.js';
 
 const router = express.Router();
 
 router.post('/save-course', authenticateToken, async (req, res) => {
   try {
+    await connectDB();
     const { topic, coreConcepts, extendedConcepts, videoResults, extendedVideoResults } = req.body;
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -24,6 +26,7 @@ router.post('/save-course', authenticateToken, async (req, res) => {
 
 router.get('/courses', authenticateToken, async (req, res) => {
   try {
+    await connectDB();
     const user = await User.findById(req.userId).select('courses');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.status(200).json({ courses: user.courses });
@@ -35,6 +38,7 @@ router.get('/courses', authenticateToken, async (req, res) => {
 
 router.get('/course/:id', authenticateToken, async (req, res) => {
   try {
+    await connectDB();
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
     const course = user.courses.id(req.params.id);

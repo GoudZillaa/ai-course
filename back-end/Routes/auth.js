@@ -2,12 +2,13 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../Models/user.js'
+import connectDB from '../db.js';
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/register', async (req, res) => {
     try {
+        await connectDB();
         const { username, email, password } = req.body;
         if (!process.env.JWT_SECRET) throw new Error("Server configuration error (JWT_SECRET missing)");
 
@@ -27,6 +28,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        await connectDB();
         const { email, password } = req.body;
         if (!process.env.JWT_SECRET) throw new Error("Server configuration error (JWT_SECRET missing)");
 
