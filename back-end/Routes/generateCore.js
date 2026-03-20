@@ -6,8 +6,8 @@ dotenv.config();
 const router = express.Router();
 
 
-const client = new OpenAI({ baseURL: "https://models.github.ai/inference", apiKey:process.env.OPENAI_API_KEY});
-const model = "openai/gpt-4.1";
+const client = new OpenAI({ baseURL: "https://models.github.ai/inference", apiKey: process.env.OPENAI_API_KEY });
+const model = "gpt-4o";
 
 router.post("/core", async (req, res) => {
   const { topic } = req.body;
@@ -19,7 +19,7 @@ I want to learn "${topic}" from scratch.
 3. For each, provide a beginner-friendly explanation.
 4. For each, give a short YouTube search query to find relevant videos.
 
-Respond with JSON:
+Respond ONLY with valid JSON in this format:
 {
   "courseTitle": "",
   "coreConcepts": [
@@ -31,22 +31,28 @@ Respond with JSON:
   ]
 }`;
 
-    try{
-        const response= await client.chat.completions.create({
-            messages:[
-                {role:"system",content:"You are a helpful course planner."},
-                {role:"user",content:prompt}
-            ],
-            temperature:0.7,
-            model:model
-        });
-        const result = response.choices[0].message.content;
-        res.json(JSON.parse(result));
+  try {
+    const response = await client.chat.completions.create({
+      messages: [
+        { role: "system", content: "You are a helpful course planner. Your response must be pure JSON." },
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.7,
+      model: model
+    });
 
-    } catch(err){
-        console.error(err);
-    res.status(500).json({ error: "Error generating core concepts." });
+    let result = response.choices[0].message.content.trim();
+    // Remove potential markdown backticks
+    if (result.startsWith("```")) {
+      result = result.replace(/^```json/, "").replace(/^```/, "").replace(/```$/, "").trim();
     }
+
+    res.json(JSON.parse(result));
+
+  } catch (err) {
+    console.error("AI Generation failed:", err);
+    res.status(500).json({ error: "Error generating core concepts." });
+  }
 });
 
 export default router;
