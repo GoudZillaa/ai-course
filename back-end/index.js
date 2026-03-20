@@ -33,7 +33,15 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', version: '1.3.0', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', version: '1.3.1', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/db-health', (req, res) => {
+    res.json({ 
+        readyState: mongoose.connection.readyState,
+        status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected/waiting',
+        dbName: mongoose.connection.name
+    });
 });
 
 app.get('/api/ping-ai', async (req, res) => {
