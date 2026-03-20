@@ -33,7 +33,20 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', version: '1.2.0', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', version: '1.3.0', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/ping-ai', async (req, res) => {
+    try {
+        const result = {
+            hasCoreToken: !!(process.env.OPENAI_API_KEY || process.env.GITHUB_TOKEN),
+            backendUrl: process.env.VITE_BACKEND_URL || 'Not Set',
+            frontendUrl: process.env.FRONTEND_URL || 'Not Set'
+        }
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 const port = process.env.PORT || 3000;

@@ -61,10 +61,10 @@ Respond ONLY with valid JSON in this format:
     }
 
   } catch (err) {
-    console.error("AI Generation failed:", err.message);
+    console.error("AI Generation failed:", err);
     res.status(500).json({ 
       error: "Generation failed.",
-      details: err.message || "Unknown error occurred on AI server."
+      details: err.response?.data?.error?.message || err.message || String(err)
     });
   }
 });
