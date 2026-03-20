@@ -34,7 +34,7 @@ function App() {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login />}/>
         <Route path='/home' element={<PrivateRoute> <Home /> </PrivateRoute>}/>
-        <Route path='/loading' element={<PrivateRoute> <Generating /> </PrivateRoute>}/>
+        <Route path='/generating' element={<PrivateRoute> <Generating /> </PrivateRoute>}/>
         <Route path='/output' element={<PrivateRoute> <Output /> </PrivateRoute>}/>
         <Route path="/saved/:id" element={<PrivateRoute> <SavedCoursePage /> </PrivateRoute>} />
       </Routes>

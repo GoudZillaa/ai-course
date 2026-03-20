@@ -57,7 +57,8 @@ const Login = () => {
             <input 
               name="email" 
               required 
-              onChange={handleChange} 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
               className="w-full px-5 py-4 glass border-gray-300 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#6366f1]/50 dark:text-white transition-all duration-300" 
               type="email" 
               placeholder="name@example.com" 
@@ -69,7 +70,8 @@ const Login = () => {
             <input 
               name="password" 
               required 
-              onChange={handleChange} 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} 
               className="w-full px-5 py-4 glass border-gray-300 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#6366f1]/50 dark:text-white transition-all duration-300" 
               type="password" 
               placeholder="••••••••" 

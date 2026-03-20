@@ -60,7 +60,8 @@ const Signup = () => {
             <input 
               name='username' 
               required 
-              onChange={handleChange} 
+              value={username}
+              onChange={(e) => setUsername(e.target.value)} 
               className="w-full px-5 py-3 glass border-gray-300 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#6366f1]/50 dark:text-white transition-all duration-300" 
               type="text" 
               placeholder="alex_dev" 
@@ -72,7 +73,8 @@ const Signup = () => {
             <input 
               name='email' 
               required 
-              onChange={handleChange} 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
               className="w-full px-5 py-3 glass border-gray-300 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#6366f1]/50 dark:text-white transition-all duration-300" 
               type="email" 
               placeholder="alex@example.com" 
@@ -84,7 +86,8 @@ const Signup = () => {
             <input 
               name='password' 
               required 
-              onChange={handleChange} 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} 
               className="w-full px-5 py-3 glass border-gray-300 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#6366f1]/50 dark:text-white transition-all duration-300" 
               type="password" 
               placeholder="••••••••" 
