@@ -15,7 +15,7 @@ const Signup = () => {
   const [error, setError] = useState(''); // Added based on the provided snippet
   const { login } = useAuth();
   const { isDark } = useTheme(); // Added based on the provided snippet
-  const { setLoading } = useLoading(); // Added based on the provided snippet
+  const { loading, setLoading } = useLoading(); // Added based on the provided snippet
 
   // handleChange is no longer needed with individual state variables
 

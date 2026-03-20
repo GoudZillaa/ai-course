@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { isDark } = useTheme();
-  const { setLoading } = useLoading();
+  const { loading, setLoading } = useLoading();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
