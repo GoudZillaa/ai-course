@@ -6,6 +6,7 @@ import {Routes,Route,useLocation} from 'react-router-dom'
 import PrivateRoute from '../Components/PrivateRoute/privateRoute'
 
 import Navbar from '../Components/Navbar/navbar'
+import TopLoader from '../Components/TopLoader/topLoader'
 import Home from '../Pages/Home/home'
 import Test from '../Components/Test/test'
 import Generating from '../Pages/Generating/generating'
