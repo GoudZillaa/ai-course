@@ -36,13 +36,22 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', version: '1.3.1', timestamp: new Date().toISOString() });
 });
 
-app.get('/api/db-health', (req, res) => {
-    res.json({ 
-        readyState: mongoose.connection.readyState,
-        status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected/waiting',
-        dbName: mongoose.connection.name,
-        error: global.mongoose?.error || null
-    });
+app.get('/api/db-health', async (req, res) => {
+    try {
+        await connectDB();
+        res.json({ 
+            readyState: mongoose.connection.readyState,
+            status: mongoose.connection.readyState === 1 ? 'connected' : 'failed',
+            dbName: mongoose.connection.name,
+            error: null
+        });
+    } catch (err) {
+        res.status(500).json({ 
+            readyState: mongoose.connection.readyState,
+            status: 'error',
+            error: err.message
+        });
+    }
 });
 
 app.get('/api/ping-ai', async (req, res) => {
