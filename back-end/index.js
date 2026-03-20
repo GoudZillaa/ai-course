@@ -19,12 +19,12 @@ app.use(cors({
 
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+import connectDB from './db.js';
+
+// Initialize DB connection
+connectDB()
   .then(() => console.log('Database connected successfully'))
-  .catch((err) => console.log('error connecting database:', err))
+  .catch((err) => console.log('Error connecting database:', err));
 
 app.use('/api', coreRouter);
 app.use('/api', extendedRouter);
