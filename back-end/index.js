@@ -32,6 +32,10 @@ app.use('/api', videoRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', version: '1.2.0', timestamp: new Date().toISOString() });
+});
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {

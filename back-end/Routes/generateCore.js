@@ -63,8 +63,8 @@ Respond ONLY with valid JSON in this format:
   } catch (err) {
     console.error("AI Generation failed:", err.message);
     res.status(500).json({ 
-      error: "Error generating concepts.",
-      details: err.message === "Missing OPENAI_API_KEY in environment" ? "Server configuration error" : "AI failed to respond properly."
+      error: "Generation failed.",
+      details: err.message || "Unknown error occurred on AI server."
     });
   }
 });
