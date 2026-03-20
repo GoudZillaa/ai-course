@@ -23,6 +23,7 @@ function App() {
 
   return (
     <div className="App w-dvw min-h-dvh relative z-0 mesh-gradient text-black dark:text-white flex flex-col transition-colors duration-300">
+      <TopLoader />
       {shouldShowNavbar && <Navbar />}
 
       <div className="flex-grow">
