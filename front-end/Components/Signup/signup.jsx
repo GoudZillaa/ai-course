@@ -26,7 +26,7 @@ const Signup = () => {
     try {
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { username, email, password });
       login(res.data.token, res.data.user);
-      navigate('/welcome');
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Signup failed');
       console.error(err);

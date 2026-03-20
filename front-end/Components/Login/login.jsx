@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, { email, password });
       login(response.data.token, response.data.user);
-      navigate('/welcome');
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
       console.error(err);
