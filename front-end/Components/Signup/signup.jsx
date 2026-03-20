@@ -21,16 +21,17 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Added based on the provided snippet
+    setLoading(true);
+    setError('');
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, { username, email, password }); // Updated endpoint and data structure
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { username, email, password });
       login(res.data.token, res.data.user);
-      navigate('/welcome'); // Updated navigation path
+      navigate('/welcome');
     } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed'); // Updated error handling
+      setError(err.response?.data?.message || 'Signup failed');
       console.error(err);
     } finally {
-      setLoading(false); // Added based on the provided snippet
+      setLoading(false);
     }
   };
 
@@ -53,6 +54,16 @@ const Signup = () => {
           </div>
           <ThemeToggle variant="navbar" />
         </div>
+
+        {error && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-medium text-center"
+          >
+            {error}
+          </motion.div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">

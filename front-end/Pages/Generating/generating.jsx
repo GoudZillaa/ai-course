@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -9,10 +9,12 @@ const Generating = () => {
   const navigate = useNavigate();
   const topic = searchParams.get("topic");
   const { setLoading } = useLoading();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setError(null);
       try {
         const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/core`, { topic });
         const courseData = response.data;
@@ -43,12 +45,35 @@ const Generating = () => {
         });
       } catch (err) {
         console.error("Error generating course:", err);
+        setError("AI Architect failed to generate the outline. Please try a different topic.");
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+    if (topic) fetchData();
   }, [topic, navigate, setLoading]);
+
+  if (error) {
+    return (
+      <div className="Generate relative min-h-screen w-full flex flex-col justify-center items-center px-6 md:px-20 overflow-hidden mesh-gradient">
+        <div className="glass p-12 rounded-[2.5rem] text-center space-y-6 max-w-lg border-white/20 shadow-2xl">
+          <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto">
+             <span className="text-4xl">⚠️</span>
+          </div>
+          <h2 className="text-3xl font-bold text-gradient">Generation Error</h2>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">
+            {error}
+          </p>
+          <button
+            onClick={() => navigate('/home')}
+            className="px-8 py-4 bg-[#6366f1] text-white rounded-2xl font-bold hover:bg-[#4f46e5] transition-all shadow-lg"
+          >
+            Go Back Home
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="Generate relative min-h-screen w-full flex flex-col justify-center items-center px-6 md:px-20 overflow-hidden mesh-gradient">

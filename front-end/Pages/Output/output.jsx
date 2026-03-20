@@ -16,6 +16,7 @@ const Output = () => {
   const [isExtended, setIsExtended] = useState(mode === "extended");
   const [extendedVideoResults, setExtendedVideoResults] = useState(null);
   const [loadingExtended, setLoadingExtended] = useState(false);
+  const [error, setError] = useState(null);
   const { setLoading } = useLoading();
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const Output = () => {
     const fetchExtended = async () => {
       setLoadingExtended(true);
       setLoading(true);
+      setError(null);
       try {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/extended`, { topic });
         const extendedData = res.data;
@@ -48,6 +50,7 @@ const Output = () => {
         uploadCourse(extendedData, extVideoResults);
       } catch (err) {
         console.error("Error fetching extended course:", err);
+        setError("Failed to fetch mastery concepts. You can still learn the core curriculum below.");
       } finally {
         setLoadingExtended(false);
         setLoading(false);
