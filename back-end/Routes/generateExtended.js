@@ -2,8 +2,6 @@ import express from "express";
 import OpenAI from "openai";
 
 const router = express.Router();
-
-const client = new OpenAI({ baseURL: "https://models.github.ai/inference", apiKey: process.env.OPENAI_API_KEY });
 const model = "gpt-4o";
 
 router.post("/extended", async (req, res) => {

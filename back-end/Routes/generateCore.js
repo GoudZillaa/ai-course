@@ -4,9 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const router = express.Router();
-
-
-const client = new OpenAI({ baseURL: "https://models.github.ai/inference", apiKey: process.env.OPENAI_API_KEY });
 const model = "gpt-4o";
 
 router.post("/core", async (req, res) => {
