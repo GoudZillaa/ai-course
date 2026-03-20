@@ -40,7 +40,8 @@ app.get('/api/db-health', (req, res) => {
     res.json({ 
         readyState: mongoose.connection.readyState,
         status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected/waiting',
-        dbName: mongoose.connection.name
+        dbName: mongoose.connection.name,
+        error: global.mongoose?.error || null
     });
 });
 

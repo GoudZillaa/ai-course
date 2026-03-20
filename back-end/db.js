@@ -9,7 +9,7 @@ if (!MONGO_URI) {
 let cached = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global.mongoose = { conn: null, promise: null, error: null };
 }
 
 async function connectDB() {
@@ -20,10 +20,16 @@ async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000, // Fail fast (5s) instead of timing out at 30s
     };
 
     cached.promise = mongoose.connect(MONGO_URI, opts).then((mongoose) => {
+      cached.error = null;
       return mongoose;
+    }).catch(err => {
+      cached.error = err.message;
+      cached.promise = null;
+      throw err;
     });
   }
 
