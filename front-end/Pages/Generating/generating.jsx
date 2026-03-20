@@ -45,7 +45,8 @@ const Generating = () => {
         });
       } catch (err) {
         console.error("Error generating course:", err);
-        setError("AI Architect failed to generate the outline. Please try a different topic.");
+        const serverDetail = err.response?.data?.details;
+        setError(serverDetail || "AI Architect failed to generate the outline. Please try a different topic.");
       } finally {
         setLoading(false);
       }

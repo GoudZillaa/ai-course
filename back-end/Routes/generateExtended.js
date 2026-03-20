@@ -28,9 +28,13 @@ Respond ONLY with valid JSON in this format:
 }`;
 
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error("Missing OPENAI_API_KEY in environment");
+    }
+
     const response = await client.chat.completions.create({
       messages: [
-        { role: "system", content: "You are a helpful advanced instructor. Your response must be pure JSON." },
+        { role: "system", content: "You are a helpful advanced instructor. Your response must be valid JSON only. Do not include markdown formatting." },
         { role: "user", content: prompt }
       ],
       temperature: 0.7,
@@ -38,15 +42,25 @@ Respond ONLY with valid JSON in this format:
     });
 
     let result = response.choices[0].message.content.trim();
-     // Remove potential markdown backticks
-     if (result.startsWith("```")) {
-      result = result.replace(/^```json/, "").replace(/^```/, "").replace(/```$/, "").trim();
+    
+    // Attempt robust JSON extraction
+    try {
+      const firstBrace = result.indexOf('{');
+      const lastBrace = result.lastIndexOf('}');
+      if (firstBrace !== -1 && lastBrace !== -1) {
+        result = result.slice(firstBrace, lastBrace + 1);
+      }
+      res.json(JSON.parse(result));
+    } catch (parseErr) {
+       console.error("Failed to parse AI response as JSON. Raw output:", result);
+       throw new Error("AI returned an invalid response format.");
     }
-
-    res.json(JSON.parse(result));
   } catch (err) {
-    console.error("AI Deep Dive failed:", err);
-    res.status(500).json({ error: "Error generating extended concepts." });
+    console.error("AI Deep Dive failed:", err.message);
+    res.status(500).json({ 
+      error: "Error generating extended concepts.",
+      details: err.message === "Missing OPENAI_API_KEY in environment" ? "Server configuration error" : "AI failed to respond properly."
+    });
   }
 });
 
