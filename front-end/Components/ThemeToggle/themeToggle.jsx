@@ -2,22 +2,8 @@
 import React from 'react';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import Switch from '@mui/material/Switch';
-import { alpha, styled } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
+import { motion } from 'framer-motion';
 import { useTheme } from '../../Context/themeContext';
-
-const GreySwitch = styled(Switch)(({ theme }) => ({
-  '& .MuiSwitch-switchBase.Mui-checked': {
-    color: grey[300],
-    '&:hover': {
-      backgroundColor: alpha(grey[300], theme.palette.action.hoverOpacity),
-    },
-  },
-  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-    backgroundColor: grey[300],
-  },
-}));
 
 const ThemeToggle = ({ variant = 'default' }) => {
   const { isDark, toggleDarkMode } = useTheme();
@@ -25,24 +11,36 @@ const ThemeToggle = ({ variant = 'default' }) => {
   // Different variants for different use cases
   const variants = {
     default: "flex items-center gap-2",
-    welcome: "flex items-center justify-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700",
-    navbar: "w-fit mt-[-10px] flex items-center"
+    welcome: "glass p-4 rounded-2xl flex items-center gap-4 shadow-lg",
+    navbar: "flex items-center"
   };
 
   return (
     <div className={variants[variant]}>
-      {isDark ? (
-        <DarkModeIcon sx={{ color: '#6b7280' }} />
-      ) : (
-        <LightModeIcon sx={{ color: '#6b7280' }} />
-      )}
-      <GreySwitch
-        checked={isDark}
-        onChange={toggleDarkMode}
-      />
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={toggleDarkMode}
+        className={`relative w-14 h-8 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-500 ${
+          isDark ? 'bg-indigo-600' : 'bg-amber-100'
+        }`}
+      >
+        <motion.div
+          className={`w-6 h-6 rounded-full flex items-center justify-center shadow-md bg-white`}
+          animate={{ x: isDark ? 24 : 0 }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        >
+          {isDark ? (
+            <DarkModeIcon className="text-indigo-600 !text-sm" />
+          ) : (
+            <LightModeIcon className="text-amber-500 !text-sm" />
+          )}
+        </motion.div>
+      </motion.button>
+      
       {variant === 'welcome' && (
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {isDark ? 'Dark Mode' : 'Light Mode'}
+        <span className="text-sm font-semibold tracking-wide uppercase opacity-70">
+          {isDark ? 'Dark Universe' : 'Light Realm'}
         </span>
       )}
     </div>

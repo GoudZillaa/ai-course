@@ -22,7 +22,7 @@ function App() {
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname)
 
   return (
-    <div className="App w-dvw h-dvh relative z-0 bg-[#eeeeee] text-black flex flex-col ">
+    <div className="App w-dvw min-h-dvh relative z-0 mesh-gradient text-black dark:text-white flex flex-col transition-colors duration-300">
       {shouldShowNavbar && <Navbar />}
 
       <div className="flex-grow">
