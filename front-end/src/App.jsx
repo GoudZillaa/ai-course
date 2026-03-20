@@ -16,11 +16,20 @@ import Signup from '../Components/Signup/signup'
 import Welcome from '../Pages/Welcome/welcome'
 import SavedCoursePage from '../Pages/SavedCoursePage/savedCoursePage'
 
-function App() {
-  const location = useLocation()
- const hideNavbarRoutes = ['/', '/login', '/signup', '/welcome']
+import { useLoading } from '../Context/loadingContext'
+ 
+ function App() {
+   const location = useLocation()
+   const { setLoading } = useLoading()
+  const hideNavbarRoutes = ['/', '/login', '/signup', '/welcome']
+ 
+   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname)
 
-  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname)
+   useEffect(() => {
+     // Safety reset: stop loader whenever route changes
+     // Components that need a loader (like Generating) will set it to true themselves
+     setLoading(false)
+   }, [location.pathname, setLoading])
 
   return (
     <div className="App w-dvw min-h-dvh relative z-0 mesh-gradient text-black dark:text-white flex flex-col transition-colors duration-300">

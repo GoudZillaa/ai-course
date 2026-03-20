@@ -9,15 +9,14 @@ const TopLoader = () => {
     <AnimatePresence>
       {loading && (
         <motion.div
-          initial={{ x: "-100%" }}
-          animate={{ x: "0%" }}
-          exit={{ x: "100%", opacity: 0 }}
+          initial={{ scaleX: 0, originX: 0 }}
+          animate={{ scaleX: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ 
-            duration: 1.5, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
+            duration: 0.5,
+            ease: "easeOut" 
           }}
-          className="fixed top-0 left-0 right-0 h-1 z-[100] bg-gradient-to-r from-transparent via-[#6366f1] to-transparent shadow-[0_0_10px_#6366f1]"
+          className="fixed top-0 left-0 right-0 h-1 z-[100] bg-gradient-to-r from-[#6366f1] to-purple-500 shadow-[0_0_10px_#6366f1]"
         />
       )}
     </AnimatePresence>
